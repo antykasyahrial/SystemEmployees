@@ -20,3 +20,5 @@ Route::get('/', function () {
 Route::get('/login', 'App\Http\Controllers\EmployeeController@index')->name('login.index');
 Route::get('/logout', 'App\Http\Controllers\EmployeeController@logout')->name('login.logout');
 Route::post('/login', 'App\Http\Controllers\EmployeeController@process')->name('process');
+Route::get('/add', 'App\Http\Controllers\EmployeeController@add')->name('addData');
+Route::post('/add', 'App\Http\Controllers\EmployeeController@store')->name('storeData');
