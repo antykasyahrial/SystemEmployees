@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Employee;
+use Bcrypt\Bcrypt;
 use DataTables;
 class EmployeeController extends Controller
 {
@@ -45,6 +46,7 @@ class EmployeeController extends Controller
     }
 
     public function store(Request $request){
+        $bcrypt = new Bcrypt();
         $validateData = $request->validate([
             'name'      => 'required|min:4|max:250',
             'username'  => 'required|min:4|max:250',
@@ -55,11 +57,11 @@ class EmployeeController extends Controller
         $employee = new Employee();
         $employee->name = $request->name;
         $employee->username = $request->username;
-        $employee->password = $request->password;
+        $employee->password = $bcrypt->encrypt($request->password);
         $employee->address = $request->address;
         $employee->jabatan = $request->jabatan;
         $employee->save();
-        return 1;
+        return redirect(route('dashboard'))->with('message',"Data Employee Ditambah");
     }
 
     public function show(Request $request){
@@ -85,8 +87,8 @@ class EmployeeController extends Controller
     }
 
     public function update(Request $request, $id){
+        $bcrypt = new Bcrypt();
         if (Employee::where('id', $id)->exists()){
-            
             $validateData = $request->validate([
                 'name'      => 'required|min:4|max:250',
                 'username'  => 'required|min:4|max:250',
@@ -101,7 +103,7 @@ class EmployeeController extends Controller
             $employee->address = $request->address;
             $employee->jabatan = $request->jabatan;
             if ($request->password != null){
-                $employee->password = $request->password;
+                $employee->password = $bcrypt->encrypt($request->password);
             }
             $employee->save();
             return redirect(route('dashboard'))->with('message',"Data Employee Diubah");
