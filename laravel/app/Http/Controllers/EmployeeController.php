@@ -34,31 +34,6 @@ class EmployeeController extends Controller
         return view('staffView', ['data'=>$employee]);   
     }
 
-    public function process(Request $request){
-        $validateData = $request->validate([
-            'username' => 'required',
-            'password' => 'required',
-        ]);
-
-        $result = Employee::where('username', '=', $request->username)->first();
-            if($result) {
-                $bcrypt = new Bcrypt();
-                if($bcrypt->verify($request->password, $result->password)){
-                    session(['creds'=>$result]);
-                    return redirect(route('handleLogin'));
-                } else {
-                    return redirect(route('login'))->with('message',"Login gagal");
-                }
-            } else {
-                return redirect(route('login'))->with('message',"Login gagal");
-            }
-    }
-
-    public function logout(){
-        session()->forget('username');
-        return redirect('login')->with('pesan', "success");
-    }
-
     public function store(Request $request){
         $bcrypt = new Bcrypt();
         $validateData = $request->validate([

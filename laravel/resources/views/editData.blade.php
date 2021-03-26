@@ -68,7 +68,7 @@
                                 </span>
                             </div>
                             <select name="jabatan" class="form-control selectpicker">
-                                <option value="staff" {{$data->jabatan == 'staff' ? 'selected' : ''}}>Staff {{$data->jabatan}}</option>
+                                <option value="staff" {{$data->jabatan == 'staff' ? 'selected' : ''}}>Staff</option>
                                 <option value="supervisor" {{$data->jabatan == 'supervisor' ? 'selected' : ''}}>Supervisor</option>
                                 <option value="manager" {{$data->jabatan == 'manager' ? 'selected' : ''}}>Manager</option>
                             </select>

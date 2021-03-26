@@ -31,6 +31,14 @@
         </tbody>
     </table>
 </div>
+
+<form action="{{'logout'}}" method="get">
+    <div class="form-group col-lg-12 mx-auto mb-0">
+        <button type ="submit" class="btn btn-danger">
+            <span class="font-weight-bold">Logout</span>
+        </button>
+    </div>
+</form>
 </body>
    
 <script type="text/javascript">

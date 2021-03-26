@@ -68,7 +68,7 @@
                                 </span>
                             </div>
                             <select name="jabatan" class="form-control selectpicker">
-                                <option value="staff" {{$data->jabatan == 'staff' ? 'selected' : ''}}>Staff {{$data->jabatan}}</option>
+                                <option value="staff" {{$data->jabatan == 'staff' ? 'selected' : ''}}>Staff</option>
                                 <option value="supervisor" {{$data->jabatan == 'supervisor' ? 'selected' : ''}}>Supervisor</option>
                                 <option value="manager" {{$data->jabatan == 'manager' ? 'selected' : ''}}>Manager</option>
                             </select>
@@ -89,7 +89,16 @@
                             <button type ="submit" class="btn btn-primary btn-block py-2">
                                 <span class="font-weight-bold">Update</span>
                             </button>
+                            <br>
                         </div>
+
+                        <form action="{{'logout'}}" method="get">
+                            <div class="form-group col-lg-12 mx-auto mb-0">
+                                <button type ="submit" class="btn btn-danger btn-block py-2">
+                                    <span class="font-weight-bold">Logout</span>
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </form>
             </div>
