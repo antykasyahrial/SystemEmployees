@@ -24,5 +24,7 @@ Route::get('/add', 'App\Http\Controllers\EmployeeController@add')->name('addData
 Route::post('/add', 'App\Http\Controllers\EmployeeController@store')->name('storeData');
 Route::get('/dashboard', 'App\Http\Controllers\EmployeeController@show')->name('dashboard');
 Route::get('/delete/{id}', 'App\Http\Controllers\EmployeeController@destroy')->name('delete');
+Route::get('/edit/{id}', 'App\Http\Controllers\EmployeeController@edit')->name('edit');
+Route::post('/edit/{id}', 'App\Http\Controllers\EmployeeController@update')->name('update');
 
 Auth::routes();

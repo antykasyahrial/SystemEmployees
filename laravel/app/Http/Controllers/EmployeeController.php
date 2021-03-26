@@ -15,6 +15,11 @@ class EmployeeController extends Controller
         return view('addData');
     }
 
+    public function edit($id){
+        $employee = Employee::find($id);
+        return view('editData', ['data'=>$employee]);
+    }
+
     public function process(Request $request){
         $validateData = $request->validate([
             'username' => 'required',
@@ -77,5 +82,29 @@ class EmployeeController extends Controller
     {
         Employee::where('id', $id)->delete();
         return redirect(route('dashboard'))->with('message',"Data Employee Dihapus");
+    }
+
+    public function update(Request $request, $id){
+        if (Employee::where('id', $id)->exists()){
+            
+            $validateData = $request->validate([
+                'name'      => 'required|min:4|max:250',
+                'username'  => 'required|min:4|max:250',
+                'password'  => 'nullable|min:4|max:250',
+                'address'   => 'required',
+                'jabatan'   => 'required',
+            ]);
+
+            $employee = Employee::find($id);
+            $employee->name = $request->name;
+            $employee->username = $request->username;
+            $employee->address = $request->address;
+            $employee->jabatan = $request->jabatan;
+            if ($request->password != null){
+                $employee->password = $request->password;
+            }
+            $employee->save();
+            return redirect(route('dashboard'))->with('message',"Data Employee Diubah");
+        }
     }
 }
