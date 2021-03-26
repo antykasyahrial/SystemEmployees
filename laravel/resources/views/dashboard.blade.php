@@ -17,6 +17,14 @@
     
 <div class="container">
     <h1>Data Employee</h1>
+    <form action="{{'add'}}" method="get">
+        <div class="form-group col-lg-12 mx-auto mb-0">
+            <button type ="submit" class="btn btn-primary">
+                <span class="font-weight-bold">Add Employee</span>
+            </button>
+        </div>
+        <br>
+    </form>
     <table class="table table-bordered data-table">
         <thead>
             <tr>

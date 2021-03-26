@@ -21,12 +21,7 @@ Route::get('/login', 'App\Http\Controllers\LoginController@index')->name('login'
 Route::get('/logout', 'App\Http\Controllers\LoginController@logout')->name('logout');
 Route::post('/login', 'App\Http\Controllers\LoginController@process')->name('process');
 Route::get('/handleLogin', 'App\Http\Controllers\LoginController@authenticated')->name('handleLogin');
-// Route::get('/add', 'App\Http\Controllers\EmployeeController@add')->name('addData');
-// Route::post('/add', 'App\Http\Controllers\EmployeeController@store')->name('storeData');
-// Route::get('/dashboard', 'App\Http\Controllers\EmployeeController@show')->name('dashboard');
-// Route::get('/delete/{id}', 'App\Http\Controllers\EmployeeController@destroy')->name('delete');
- Route::get('/edit/{id}', 'App\Http\Controllers\EmployeeController@edit')->name('edit');
-// Route::post('/edit/{id}', 'App\Http\Controllers\EmployeeController@update')->name('update');
+Route::get('/edit/{id}', 'App\Http\Controllers\EmployeeController@edit')->name('edit');
 
 Route::group(['middleware' => ['manager_auth']], function() {
     Route::get('/add', 'App\Http\Controllers\EmployeeController@add')->name('addData');
@@ -36,11 +31,11 @@ Route::group(['middleware' => ['manager_auth']], function() {
     Route::get('/edit/{id}', 'App\Http\Controllers\EmployeeController@edit')->name('edit');
     Route::post('/edit/{id}', 'App\Http\Controllers\EmployeeController@update')->name('update');
 });
+
 Route::group(['middleware' => ['supervisor_auth']], function() {
     Route::get('/add', 'App\Http\Controllers\EmployeeController@add')->name('addData');
     Route::post('/add', 'App\Http\Controllers\EmployeeController@store')->name('storeData');
     Route::get('/dashboard', 'App\Http\Controllers\EmployeeController@show')->name('dashboard');
-    //Route::get('/delete/{id}', 'App\Http\Controllers\EmployeeController@destroy')->name('delete');
     Route::get('/edit/{id}', 'App\Http\Controllers\EmployeeController@edit')->name('edit');
     Route::post('/edit/{id}', 'App\Http\Controllers\EmployeeController@update')->name('update');
 });
