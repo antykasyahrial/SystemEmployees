@@ -49,4 +49,4 @@ Route::group(['middleware' => ['supervisor_auth']], function() {
 //     Route::get('/profile', 'App\Http\Controllers\EmployeeController@profile')->name('profile');
 // });
 Route::get('/profile', 'App\Http\Controllers\EmployeeController@profile')->middleware('staff_auth')->name('profile');
-
+Route::get('/staff/{id}', 'App\Http\Controllers\EmployeeController@staff')->name('staff')->middleware('staff_auth');

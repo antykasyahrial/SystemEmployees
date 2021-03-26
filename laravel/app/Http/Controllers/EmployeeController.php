@@ -24,9 +24,14 @@ class EmployeeController extends Controller
         return view('editData', ['data'=>$employee]);
     }
 
+    public function staff($id){
+        $employee = Employee::find($id);
+        return view('profileData', ['data'=>$employee]);
+    }
+
     public function profile(){
         $employee = session()->get('creds');
-        return view('editData', ['data'=>$employee]);   
+        return view('staffView', ['data'=>$employee]);   
     }
 
     public function process(Request $request){
