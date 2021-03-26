@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Employee;
+use DataTables;
 class EmployeeController extends Controller
 {
     public function index(){
@@ -54,5 +55,27 @@ class EmployeeController extends Controller
         $employee->jabatan = $request->jabatan;
         $employee->save();
         return 1;
+    }
+
+    public function show(Request $request){
+        if ($request->ajax()) {
+            $data = Employee::select('*');
+            return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('action', function($row){
+                           $btn = '<a href="edit/'. $row->id .'" class="edit btn btn-primary btn-sm">Edit</a>
+                           <a href="delete/'.$row->id.'" class="edit btn btn-danger btn-sm">Delete</a>';
+                            return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+        return view('dashboard');
+    }
+
+    public function destroy($id)
+    {
+        Employee::where('id', $id)->delete();
+        return redirect(route('dashboard'))->with('message',"Data Employee Dihapus");
     }
 }

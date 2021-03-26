@@ -22,3 +22,7 @@ Route::get('/logout', 'App\Http\Controllers\EmployeeController@logout')->name('l
 Route::post('/login', 'App\Http\Controllers\EmployeeController@process')->name('process');
 Route::get('/add', 'App\Http\Controllers\EmployeeController@add')->name('addData');
 Route::post('/add', 'App\Http\Controllers\EmployeeController@store')->name('storeData');
+Route::get('/dashboard', 'App\Http\Controllers\EmployeeController@show')->name('dashboard');
+Route::get('/delete/{id}', 'App\Http\Controllers\EmployeeController@destroy')->name('delete');
+
+Auth::routes();
