@@ -6,8 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\Employee;
 use Bcrypt\Bcrypt;
 use DataTables;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 class EmployeeController extends Controller
 {
+    use AuthenticatesUsers;
     public function index(){
         return view('login');
     }
@@ -21,22 +24,28 @@ class EmployeeController extends Controller
         return view('editData', ['data'=>$employee]);
     }
 
+    public function profile(){
+        $employee = session()->get('creds');
+        return view('editData', ['data'=>$employee]);   
+    }
+
     public function process(Request $request){
         $validateData = $request->validate([
             'username' => 'required',
             'password' => 'required',
         ]);
 
-        $result = Staff::where('username', '=', $validateData['username'])->first();
+        $result = Employee::where('username', '=', $request->username)->first();
             if($result) {
-                if(($request -> password == $result->password)){
-                    session(['username' => $request->username]);
-                    return redirect('/');
+                $bcrypt = new Bcrypt();
+                if($bcrypt->verify($request->password, $result->password)){
+                    session(['creds'=>$result]);
+                    return redirect(route('handleLogin'));
                 } else {
-                    return back()->withInput()->with('pesan', "failed");
+                    return redirect(route('login'))->with('message',"Login gagal");
                 }
             } else {
-                return back()->withInput()->with('pesan', "failed");
+                return redirect(route('login'))->with('message',"Login gagal");
             }
     }
 
@@ -107,6 +116,17 @@ class EmployeeController extends Controller
             }
             $employee->save();
             return redirect(route('dashboard'))->with('message',"Data Employee Diubah");
+        }
+    }
+    public function authenticated(Request $request)
+    {
+        $result = session()->get('creds');
+        if($result->hasRole('manager')){
+            return redirect(route('dashboard'));
+        }else if ($result->hasRole('supervisor')){
+            return redirect(route('dashboard'));
+        } else {
+            return redirect(route('profile'));
         }
     }
 }

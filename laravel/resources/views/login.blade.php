@@ -10,7 +10,7 @@
   <meta name="author" content="">
 
   <link href="../agros/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <body class="bg-gradient-primary">
@@ -33,7 +33,8 @@
 
             <!-- Registeration Form -->
             <div class="col-md-7 col-lg-6 ml-auto">
-                <form action="#">
+                <form action="{{route('process')}}" method="post">
+                @csrf
                     <div class="row">
                         <!-- Username -->
                         <div class="input-group col-lg-12 mb-4">
@@ -57,14 +58,19 @@
                        
                         <!-- Submit Button -->
                         <div class="form-group col-lg-12 mx-auto mb-0">
-                            <a href="#" class="btn btn-primary btn-block py-2">
+                            <button type ="submit" class="btn btn-primary btn-block py-2">
                                 <span class="font-weight-bold">Login</span>
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    <script>
+        @if(session()->has('message'))
+            swal("{{ session()->get('message') }}");
+        @endif
+    </script>
 </body>
 </html>
